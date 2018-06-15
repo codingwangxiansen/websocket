@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>socket</title>
+</head>
+<body>
+<div id="message"></div>
+<input type="text" id="text">
+<label for="">用户id:</label><input id="userId" type="text">
+<button onclick="connect()">连接</button>
+<button onclick="send()">发送</button>
+<script src="js/pagesocket.js"></script>
+<script>
+    var pageSocket;
+
+    function connect() {
+      pageSocket = new PageSocket({
+        id: document.getElementById('userId').value
+      })
+      pageSocket.onmessage = function (data) {
+        document.getElementById('message').innerHTML += data + '<br/>';
+      }
+
+      pageSocket.createWebSocket()
+    }
+
+    function send(){
+      var message = document.getElementById('text').value;
+      pageSocket.send(message)
+    }
+</script>
+</body>
+</html>
